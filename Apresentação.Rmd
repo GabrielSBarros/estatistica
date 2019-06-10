@@ -176,6 +176,17 @@ anova(full.model)
 
 ### Após todos os testes foi observado que os modelos propostos de regressão linear múltipla não são válidos, visto que as pressuposições para que os mesmos ocorram não são satisfeitas. Nos estranhou, inicialmente, o comportamento que os resíduos apresentam. Entretanto, ao analisar mais profundamente o procedimento efetuado pelo YouTube para que um vídeo da plataforma entre na aba "em alta", podemos ver que não apenas há o componente automatizado, como também há uma forte influência manual humana de uma equipe de curadoria do YouTube, como melhor descrito na seção acima. Desta maneira, acreditamos que parte da componente residual do modelo de regressão linear se dá graças à interferência humana nas seleções dos vídeos.
 
+# Referências
+
+### Documentação do algoritmo do YouTube:
+### https://support.google.com/youtube/answer/7239739?hl=en
+### ----------------------------------------------------------------------------------------
+### Documentação das categorias de vídeo no YouTube
+### https://gist.github.com/dgp/1b24bf2961521bd75d6c
+### ----------------------------------------------------------------------------------------
+### Base de dados utilizada:
+### https://www.kaggle.com/datasnaek/youtube-new
+
 <style type="text/css">
 h1 {
 }
