@@ -1,0 +1,658 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Trabalho de Estatística},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Trabalho de Estatística}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\hypertarget{escolha-da-base-de-dados}{%
+\section{Escolha da Base de Dados}\label{escolha-da-base-de-dados}}
+
+\hypertarget{para-a-base-de-dados-foram-escolhidas-informacoes-sobre-videos-em-alta-do-youtube-i.e.videos-de-destaque-na-plataforma-postos-em-uma-aba-diferenciada.-para-a-analise-escolhemos-videos-do-youtube-estadunidense.-a-base-encontra-se-no-formato-csv-e-utilizamos-o-software-estatistico-r-para-efetuar-os-comandos-de-maneira-adequada.}{%
+\subsubsection{Para a base de dados, foram escolhidas informações sobre
+vídeos ``em alta'' do YouTube (i.e.~vídeos de destaque na plataforma,
+postos em uma aba diferenciada). Para a análise, escolhemos vídeos do
+YouTube estadunidense. A base encontra-se no formato CSV, e utilizamos o
+software estatístico R para efetuar os comandos de maneira
+adequada.}\label{para-a-base-de-dados-foram-escolhidas-informacoes-sobre-videos-em-alta-do-youtube-i.e.videos-de-destaque-na-plataforma-postos-em-uma-aba-diferenciada.-para-a-analise-escolhemos-videos-do-youtube-estadunidense.-a-base-encontra-se-no-formato-csv-e-utilizamos-o-software-estatistico-r-para-efetuar-os-comandos-de-maneira-adequada.}}
+
+\hypertarget{a-base-e-composta-de-40949-videos-publicados-desde-2006-ate-2018-onde-todos-em-determinado-momento-foram-incluidos-na-aba-em-alta-e-possui-as-seguintes-variaveis}{%
+\subsubsection{A base é composta de 40949 vídeos, publicados desde 2006
+até 2018, onde todos em determinado momento foram incluídos na aba
+``em-alta'', e possui as seguintes
+variáveis:}\label{a-base-e-composta-de-40949-videos-publicados-desde-2006-ate-2018-onde-todos-em-determinado-momento-foram-incluidos-na-aba-em-alta-e-possui-as-seguintes-variaveis}}
+
+\hypertarget{identificador-do-video-data-em-que-entrou-na-aba-em-alta-titulo-do-video-titulo-do-canal-que-o-publicou-identificador-da-categoria-do-video-data-e-hora-de-publicacao-do-video-tags-do-video-visualizacoes-do-video-numero-de-gosteis-numero-de-nao-gosteis-contagem-de-comentarios-link-da-imagem-de-thumbnail-do-video-descricao-do-video-e-valores-chaveados-que-dizem-se-os-comentarios-foram-desabilitados-a-avaliacao-do-video-gosteis-e-nao-gosteis-foram-desabilitados-e-por-fim-se-ocorreu-algum-erro-no-video-ou-se-foi-deletado.}{%
+\subsubsection{identificador do vídeo, data em que entrou na aba ``em
+alta'', título do vídeo, título do canal que o publicou, identificador
+da categoria do vídeo, data e hora de publicação do vídeo, tags do
+vídeo, visualizações do vídeo, número de ``gosteis'', número de ``não
+gosteis'', contagem de comentários, link da imagem de thumbnail do
+vídeo, descrição do vídeo e valores chaveados que dizem se os
+comentários foram desabilitados, a avaliação do vídeo (``gosteis'' e
+``não gosteis'') foram desabilitados, e por fim se ocorreu algum erro no
+vídeo ou se foi
+deletado.}\label{identificador-do-video-data-em-que-entrou-na-aba-em-alta-titulo-do-video-titulo-do-canal-que-o-publicou-identificador-da-categoria-do-video-data-e-hora-de-publicacao-do-video-tags-do-video-visualizacoes-do-video-numero-de-gosteis-numero-de-nao-gosteis-contagem-de-comentarios-link-da-imagem-de-thumbnail-do-video-descricao-do-video-e-valores-chaveados-que-dizem-se-os-comentarios-foram-desabilitados-a-avaliacao-do-video-gosteis-e-nao-gosteis-foram-desabilitados-e-por-fim-se-ocorreu-algum-erro-no-video-ou-se-foi-deletado.}}
+
+\hypertarget{na-pesquisa-efetuada-sobre-esta-base-de-dados-buscamos-analisar-a-dependencia-das-visualizacoes-de-um-video-com-a-quantidade-de-gosteis-quantidade-de-nao-gosteis-contagem-de-comentario-se-o-video-permite-comentarios-e-se-permite-avaliacoes.}{%
+\subsubsection{Na pesquisa efetuada sobre esta base de dados, buscamos
+analisar a dependência das visualizações de um vídeo com a quantidade de
+``gosteis'', quantidade de ``não gosteis'', contagem de comentário, se o
+vídeo permite comentários e se permite
+avaliações.}\label{na-pesquisa-efetuada-sobre-esta-base-de-dados-buscamos-analisar-a-dependencia-das-visualizacoes-de-um-video-com-a-quantidade-de-gosteis-quantidade-de-nao-gosteis-contagem-de-comentario-se-o-video-permite-comentarios-e-se-permite-avaliacoes.}}
+
+\hypertarget{analise-descritiva}{%
+\section{Análise Descritiva}\label{analise-descritiva}}
+
+\hypertarget{analise-das-correlacoes}{%
+\subsection{Análise das Correlações}\label{analise-das-correlacoes}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{cor}\NormalTok{(views, likes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8491765
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{cor}\NormalTok{(views, comment_count)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.6176213
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{cor}\NormalTok{(views, dislikes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4722132
+\end{verbatim}
+
+\hypertarget{pode-se-observar-que-a-correlacao-entre-visualizacoes-e-gosteis-e-forte-visto-que-possui-um-valor-entre-070-e-089-porem-quanto-aos-comentarios-e-aos-nao-gosteis-as-correlacoes-sao-moderadas.-visto-que-nao-se-tratam-de-correlacoes-fracas-vale-a-pena-adicionar-as-variaveis-no-modelo}{%
+\subsubsection{Pode-se observar que a correlação entre visualizações e
+``gosteis'' é forte, visto que possui um valor entre 0,70 e 0,89; porém,
+quanto aos comentários e aos ``não gosteis'' as correlações são
+moderadas. Visto que não se tratam de correlações fracas, vale a pena
+adicionar as variáveis no
+modelo}\label{pode-se-observar-que-a-correlacao-entre-visualizacoes-e-gosteis-e-forte-visto-que-possui-um-valor-entre-070-e-089-porem-quanto-aos-comentarios-e-aos-nao-gosteis-as-correlacoes-sao-moderadas.-visto-que-nao-se-tratam-de-correlacoes-fracas-vale-a-pena-adicionar-as-variaveis-no-modelo}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  limited_views <-}\StringTok{ }\NormalTok{data[views }\OperatorTok{<}\StringTok{ }\DecValTok{3500000}\NormalTok{, ]}
+  \KeywordTok{attach}\NormalTok{(limited_views)}
+  \KeywordTok{plot}\NormalTok{(views,  }\DataTypeTok{ylab =} \StringTok{"Número de views"}\NormalTok{,  }\DataTypeTok{xlab =} \StringTok{"Index"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Dispersão das views"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Apresentação_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{plot}\NormalTok{(views[}\DecValTok{0}\OperatorTok{:}\DecValTok{1350}\NormalTok{], }\DataTypeTok{ylab =} \StringTok{"Número de views"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Index"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Dispersão das views"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Apresentação_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+\hypertarget{visto-que-damos-enfoque-para-as-visualizacoes-dos-videos-nesta-base-de-dados-efetuamos-um-grafico-de-dispersao-nessa-variavel.-inicialmente-o-grafico-mostra-se-bastante-poluido-uma-vez-que-ha-muitas-observacoes-de-valores-muitos-proximos.-para-permitir-a-legibilidade-das-informacoes-buscamos-exibir-uma-amostra-de-apenas-1350-observacoes-329-da-amostra-total-no-grafico-de-dispersao-fazemos-isto-apenas-porque-a-amostra-original-e-desornada-pois-caso-o-contrario-teriamos-dados-bastante-enviesados.-podemos-ver-agora-de-maneira-mais-clara-que-as-visualizacoes-dos-videos-em-alta-concentram-se-abaixo-de-1000000-porem-que-ha-ainda-muitos-videos-com-visualizacoes-bem-maiores-e-um-comportamento-de-que-quao-mais-elevada-a-faixa-de-visualizacoes-mais-raros-os-videos-que-a-alcancam-confirmando-algo-esperado-e-intuitivo.}{%
+\subsubsection{Visto que damos enfoque para as visualizações dos vídeos
+nesta base de dados, efetuamos um gráfico de dispersão nessa variável.
+Inicialmente, o gráfico mostra-se bastante poluído, uma vez que há
+muitas observações de valores muitos próximos. Para permitir a
+legibilidade das informações, buscamos exibir uma amostra de apenas 1350
+observações (3,29\% da amostra total) no gráfico de dispersão; fazemos
+isto apenas porque a amostra original é desornada, pois caso o
+contrário, teríamos dados bastante enviesados. Podemos ver, agora de
+maneira mais clara, que as visualizações dos vídeos em alta
+concentram-se abaixo de 1000000, porém que há ainda muitos vídeos com
+visualizações bem maiores, e um comportamento de que quão mais elevada a
+faixa de visualizações, mais raros os vídeos que a alcançam (confirmando
+algo esperado e
+intuitivo).}\label{visto-que-damos-enfoque-para-as-visualizacoes-dos-videos-nesta-base-de-dados-efetuamos-um-grafico-de-dispersao-nessa-variavel.-inicialmente-o-grafico-mostra-se-bastante-poluido-uma-vez-que-ha-muitas-observacoes-de-valores-muitos-proximos.-para-permitir-a-legibilidade-das-informacoes-buscamos-exibir-uma-amostra-de-apenas-1350-observacoes-329-da-amostra-total-no-grafico-de-dispersao-fazemos-isto-apenas-porque-a-amostra-original-e-desornada-pois-caso-o-contrario-teriamos-dados-bastante-enviesados.-podemos-ver-agora-de-maneira-mais-clara-que-as-visualizacoes-dos-videos-em-alta-concentram-se-abaixo-de-1000000-porem-que-ha-ainda-muitos-videos-com-visualizacoes-bem-maiores-e-um-comportamento-de-que-quao-mais-elevada-a-faixa-de-visualizacoes-mais-raros-os-videos-que-a-alcancam-confirmando-algo-esperado-e-intuitivo.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  views_count <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(data[}\DecValTok{8}\NormalTok{], data[}\DecValTok{8}\NormalTok{] }\OperatorTok{<}\StringTok{ }\DecValTok{4000000}\NormalTok{)}
+  \KeywordTok{boxplot}\NormalTok{(views_count, }\DataTypeTok{col =} \StringTok{'lightblue'}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Boxplot das views da aba Em alta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Apresentação_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{o-boxplot-acima-evidencia-este-comportamento.-embora-a-mediana-dos-valores-de-visualizacao-seja-681861-ha-muitos-videos-com-visualizacoes-muito-altas-levando-o-grafico-consideravelmente-para-baixo-e-com-muitos-outliners-obs-este-grafico-possui-uma-amostra-de-videos-com-menos-de-4-milhoes-de-visualizacoes-visto-que-a-quantidade-de-outliners-na-amostra-e-tao-grande-que-faz-com-que-o-boxplot-da-amostra-original-seja-ilegivel.}{%
+\subsubsection{O boxplot acima evidencia este comportamento. Embora a
+mediana dos valores de visualização seja 681861, há muitos vídeos com
+visualizações muito altas, levando o gráfico consideravelmente para
+baixo, e com muitos outliners (OBS: este gráfico possui uma amostra de
+vídeos com menos de 4 milhões de visualizações, visto que a quantidade
+de outliners na amostra é tão grande, que faz com que o boxplot da
+amostra original seja
+ilegível).}\label{o-boxplot-acima-evidencia-este-comportamento.-embora-a-mediana-dos-valores-de-visualizacao-seja-681861-ha-muitos-videos-com-visualizacoes-muito-altas-levando-o-grafico-consideravelmente-para-baixo-e-com-muitos-outliners-obs-este-grafico-possui-uma-amostra-de-videos-com-menos-de-4-milhoes-de-visualizacoes-visto-que-a-quantidade-de-outliners-na-amostra-e-tao-grande-que-faz-com-que-o-boxplot-da-amostra-original-seja-ilegivel.}}
+
+\hypertarget{os-dois-graficos-abaixo-referem-se-a-proporcao-de-videos-com-habilitacao-de-comentarios-e-as-quantidades-de-videos-enquadrados-nas-diferentes-categorias.-pelo-grafico-de-setores-podemos-observar-que-a-grande-maioria-dos-videos-em-alta-tem-comentarios-habilitados-ja-pelo-grafico-grafico-de-barras-podemos-observar-que-a-maior-parte-dos-videos-em-alta-pertencem-a-categoria-entretenimento-seguida-pela-categoria-musica.}{%
+\subsubsection{Os dois gráficos abaixo referem-se à proporção de vídeos
+com habilitação de comentários, e às quantidades de vídeos enquadrados
+nas diferentes categorias. Pelo gráfico de setores, podemos observar que
+a grande maioria dos vídeos em alta têm comentários habilitados; já pelo
+gráfico gráfico de barras, podemos observar que a maior parte dos vídeos
+em alta pertencem à categoria ``entretenimento'', seguida pela categoria
+``música''.}\label{os-dois-graficos-abaixo-referem-se-a-proporcao-de-videos-com-habilitacao-de-comentarios-e-as-quantidades-de-videos-enquadrados-nas-diferentes-categorias.-pelo-grafico-de-setores-podemos-observar-que-a-grande-maioria-dos-videos-em-alta-tem-comentarios-habilitados-ja-pelo-grafico-grafico-de-barras-podemos-observar-que-a-maior-parte-dos-videos-em-alta-pertencem-a-categoria-entretenimento-seguida-pela-categoria-musica.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  freq <-}\StringTok{ }\KeywordTok{table}\NormalTok{(comments_disabled)}
+  \KeywordTok{pie}\NormalTok{(freq, }\DataTypeTok{main =} \StringTok{"Habilitação de comentários"}\NormalTok{, }\DataTypeTok{labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"98.45%"}\NormalTok{, }\StringTok{"1.55%"}\NormalTok{), }\DataTypeTok{col=}\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+  \KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\DataTypeTok{fill =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{), }\DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Habilitados"}\NormalTok{, }\StringTok{"Desativados"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Apresentação_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  ajustes <-}\StringTok{ }\KeywordTok{table}\NormalTok{(data}\OperatorTok{$}\NormalTok{category_id)}
+  \KeywordTok{barplot}\NormalTok{(ajustes, }\DataTypeTok{col =} \StringTok{"lightblue"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Número de ocorrências de vídeos por categoria"}\NormalTok{,     }\DataTypeTok{ylab =} \StringTok{"Frequência", xlab = "}\NormalTok{Id da categoria}\StringTok{")}
+\StringTok{  legend("}\NormalTok{topright}\StringTok{", c("}\DecValTok{10}\OperatorTok{:}\StringTok{ }\NormalTok{Música",}\StringTok{"22: Vlogs "}\NormalTok{,}\StringTok{"23: Comédia"}\NormalTok{, }\StringTok{"24: Entretenimento"}\NormalTok{, }\StringTok{"26: Moda"}\NormalTok{, }\StringTok{"27: Educação"}\NormalTok{), bty =}\StringTok{ "n"}\ErrorTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Apresentação_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\hypertarget{modelo-e-teste-para-regressao}{%
+\section{Modelo e Teste para
+Regressão}\label{modelo-e-teste-para-regressao}}
+
+\hypertarget{agora-analisadas-que-ha-correlacao-entre-gosteis-nao-gosteis-e-contagem-de-comentarios-para-com-as-visualizacoes-buscamos-montar-um-modelo-de-regressao-linear-multipla-que-possui-a-seguinte-formulacao}{%
+\subsubsection{Agora, analisadas que há correlação entre ``gosteis'',
+``não gosteis'' e contagem de comentários para com as visualizações,
+buscamos montar um modelo de regressão linear múltipla que possui a
+seguinte
+formulação:}\label{agora-analisadas-que-ha-correlacao-entre-gosteis-nao-gosteis-e-contagem-de-comentarios-para-com-as-visualizacoes-buscamos-montar-um-modelo-de-regressao-linear-multipla-que-possui-a-seguinte-formulacao}}
+
+\hypertarget{visualizacoes-b0-b1-gosteis-b2-nao-gosteis-b3-contagem-de-comentarios-b4-comentarios-habilitados-b5-avaliacoes-habilitadas}{%
+\subsubsection{Visualizações = B0 + B1 * (``Gosteis'') + B2 (``Não
+Gosteis'') + B3 * (Contagem de Comentários) + B4 * (Comentários
+Habilitados) + B5 * (Avaliações
+Habilitadas)}\label{visualizacoes-b0-b1-gosteis-b2-nao-gosteis-b3-contagem-de-comentarios-b4-comentarios-habilitados-b5-avaliacoes-habilitadas}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{frame <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{views =}\NormalTok{ views, }\DataTypeTok{likes =}\NormalTok{ likes, }\DataTypeTok{dislikes =}\NormalTok{ dislikes, }\DataTypeTok{comment_count =}\NormalTok{ comment_count, }\DataTypeTok{comments_disabled =}\NormalTok{ comments_disabled, }\DataTypeTok{ratings_disabled =}\NormalTok{ ratings_disabled)}
+\NormalTok{full.model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(views}\OperatorTok{~}\NormalTok{. , }\DataTypeTok{data =}\NormalTok{ frame)}
+\KeywordTok{anova}\NormalTok{(full.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: views
+##                      Df     Sum Sq    Mean Sq    F value    Pr(>F)    
+## likes                 1 1.6144e+18 1.6144e+18 136949.319 < 2.2e-16 ***
+## dislikes              1 2.3929e+16 2.3929e+16   2029.975 < 2.2e-16 ***
+## comment_count         1 1.1489e+17 1.1489e+17   9746.734 < 2.2e-16 ***
+## comments_disabled     1 1.0807e+15 1.0807e+15     91.679 < 2.2e-16 ***
+## ratings_disabled      1 1.8428e+15 1.8428e+15    156.329 < 2.2e-16 ***
+## Residuals         40943 4.8264e+17 1.1788e+13                         
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{com-o-modelo-configurado-efetuamos-o-teste-anova-para-analisar-se-ha-regressao.-na-tabela-podemos-observar-algo-interessante-o-valor-p-para-cada-variavel-e-22-10-16-este-nao-e-so-um-valor-bastante-pequeno-como-tambem-e-o-menor-valor-acima-de-0-que-o-r-consegue-computar-e-representar-em-formato-decimal-double-ou-dupla-precisao.-isto-nos-sugere-que-o-valor-p-e-tao-pequeno-que-representa-que-as-variaveis-sao-significativas-ate-para-uma-pesquisa-com-alfa00-em-outras-palavras-para-uma-pesquisa-com-nivel-de-significancia-00.}{%
+\subsubsection{Com o modelo configurado, efetuamos o teste ANOVA para
+analisar se há regressão. Na tabela, podemos observar algo interessante:
+o valor-p para cada variável é 2,2 * 10\^{}(-16); este não é só um valor
+bastante pequeno, como também é o menor valor acima de 0 que o R
+consegue computar e representar em formato decimal (double, ou dupla
+precisão). Isto nos sugere que o valor-p é tão pequeno que representa
+que as variáveis são significativas até para uma pesquisa com alfa=0,0;
+em outras palavras, para uma pesquisa com nível de significância
+0,0.}\label{com-o-modelo-configurado-efetuamos-o-teste-anova-para-analisar-se-ha-regressao.-na-tabela-podemos-observar-algo-interessante-o-valor-p-para-cada-variavel-e-22-10-16-este-nao-e-so-um-valor-bastante-pequeno-como-tambem-e-o-menor-valor-acima-de-0-que-o-r-consegue-computar-e-representar-em-formato-decimal-double-ou-dupla-precisao.-isto-nos-sugere-que-o-valor-p-e-tao-pequeno-que-representa-que-as-variaveis-sao-significativas-ate-para-uma-pesquisa-com-alfa00-em-outras-palavras-para-uma-pesquisa-com-nivel-de-significancia-00.}}
+
+\hypertarget{podemos-em-seguida-observar-os-valores-f-de-cada-variavel.-o-valor-enorme-para-a-variavel-gosteis-sugere-que-a-mesma-possui-um-impacto-enorme-no-modelo-enquanto-que-o-fato-de-comentarios-estarem-habilitados-impacta-muito-menos-isto-porque-provavelmente-a-grande-massa-de-videos-em-alta-esta-com-os-comentarios-habilitados-fazendo-com-que-a-existencia-da-variavel-em-si-nao-seja-muito-relevante.}{%
+\subsubsection{Podemos em seguida observar os valores F de cada
+variável. O valor enorme para a variável ``gosteis'' sugere que a mesma
+possui um impacto enorme no modelo, enquanto que o fato de comentários
+estarem habilitados impacta muito menos (isto porque, provavelmente, a
+grande massa de vídeos em alta está com os comentários habilitados,
+fazendo com que a existência da variável em si não seja muito
+relevante).}\label{podemos-em-seguida-observar-os-valores-f-de-cada-variavel.-o-valor-enorme-para-a-variavel-gosteis-sugere-que-a-mesma-possui-um-impacto-enorme-no-modelo-enquanto-que-o-fato-de-comentarios-estarem-habilitados-impacta-muito-menos-isto-porque-provavelmente-a-grande-massa-de-videos-em-alta-esta-com-os-comentarios-habilitados-fazendo-com-que-a-existencia-da-variavel-em-si-nao-seja-muito-relevante.}}
+
+\hypertarget{em-luz-destas-informacoes-podemos-concluir-com-propriedade-que-ha-regressao-e-que-as-variaveis-independentes-de-fato-influenciam-a-variavel-visualizacoes-e-que-de-fato-compoem-uma-funcao-linear.-portanto-damos-seguimento-ao-experimento.}{%
+\subsubsection{Em luz destas informações, podemos concluir com
+propriedade que há regressão, e que as variáveis independentes de fato
+influenciam a variável Visualizações e que de fato compõem uma função
+linear. Portanto, damos seguimento ao
+experimento.}\label{em-luz-destas-informacoes-podemos-concluir-com-propriedade-que-ha-regressao-e-que-as-variaveis-independentes-de-fato-influenciam-a-variavel-visualizacoes-e-que-de-fato-compoem-uma-funcao-linear.-portanto-damos-seguimento-ao-experimento.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \KeywordTok{library}\NormalTok{(MASS)}
+\NormalTok{ step.model <-}\StringTok{ }\KeywordTok{stepAIC}\NormalTok{(full.model, }\DataTypeTok{direction =} \StringTok{"both"}\NormalTok{, }\DataTypeTok{trace =} \OtherTok{FALSE}\NormalTok{)}
+ \KeywordTok{summary}\NormalTok{(step.model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = views ~ likes + dislikes + comment_count + comments_disabled + 
+##     ratings_disabled, data = frame)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -39598012   -397415   -168022    180541  86649462 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)            2.092e+05  1.802e+04  11.611  < 2e-16 ***
+## likes                  3.558e+01  1.292e-01 275.327  < 2e-16 ***
+## dislikes               8.310e+01  8.505e-01  97.704  < 2e-16 ***
+## comment_count         -9.770e+01  9.901e-01 -98.670  < 2e-16 ***
+## comments_disabledTrue  7.385e+05  1.452e+05   5.086 3.67e-07 ***
+## ratings_disabledTrue   3.492e+06  2.793e+05  12.503  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3433000 on 40943 degrees of freedom
+## Multiple R-squared:  0.7844, Adjusted R-squared:  0.7844 
+## F-statistic: 2.979e+04 on 5 and 40943 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{em-seguida-efetuamos-o-metodo-stepwise-de-escolha-para-o-melhor-modelo.-estranhamente-o-metodo-stepwise-nao-sugeriu-mudanca-alguma-no-modelo-previo-apenas-replicando-o.}{%
+\subsubsection{Em seguida, efetuamos o método stepwise de escolha para o
+melhor modelo. Estranhamente, o método stepwise não sugeriu mudança
+alguma no modelo prévio, apenas
+replicando-o.}\label{em-seguida-efetuamos-o-metodo-stepwise-de-escolha-para-o-melhor-modelo.-estranhamente-o-metodo-stepwise-nao-sugeriu-mudanca-alguma-no-modelo-previo-apenas-replicando-o.}}
+
+\hypertarget{teste-de-hipotese-marginal}{%
+\section{Teste de Hipótese Marginal}\label{teste-de-hipotese-marginal}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{  modelo1 =}\StringTok{ }\KeywordTok{lm}\NormalTok{(views }\OperatorTok{~}\StringTok{ }\NormalTok{likes }\OperatorTok{+}\StringTok{ }\NormalTok{dislikes }\OperatorTok{+}\StringTok{ }\NormalTok{comment_count }\OperatorTok{+}\StringTok{ }\NormalTok{comments_disabled }\OperatorTok{+}\StringTok{ }\NormalTok{ratings_disabled)}
+\NormalTok{  modelo2 =}\StringTok{ }\KeywordTok{lm}\NormalTok{(views }\OperatorTok{~}\StringTok{ }\NormalTok{likes }\OperatorTok{+}\StringTok{ }\NormalTok{dislikes }\OperatorTok{+}\StringTok{ }\NormalTok{comment_count)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{modelo-1}{%
+\subsection{Modelo 1}\label{modelo-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{summary}\NormalTok{(modelo1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = views ~ likes + dislikes + comment_count + comments_disabled + 
+##     ratings_disabled)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -39598012   -397415   -168022    180541  86649462 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)            2.092e+05  1.802e+04  11.611  < 2e-16 ***
+## likes                  3.558e+01  1.292e-01 275.327  < 2e-16 ***
+## dislikes               8.310e+01  8.505e-01  97.704  < 2e-16 ***
+## comment_count         -9.770e+01  9.901e-01 -98.670  < 2e-16 ***
+## comments_disabledTrue  7.385e+05  1.452e+05   5.086 3.67e-07 ***
+## ratings_disabledTrue   3.492e+06  2.793e+05  12.503  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3433000 on 40943 degrees of freedom
+## Multiple R-squared:  0.7844, Adjusted R-squared:  0.7844 
+## F-statistic: 2.979e+04 on 5 and 40943 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{modelo-2}{%
+\subsection{Modelo 2}\label{modelo-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{summary}\NormalTok{(modelo2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = views ~ likes + dislikes + comment_count)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -39604136   -400942   -191417    165894  86661356 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)    2.374e+05  1.792e+04   13.25   <2e-16 ***
+## likes          3.555e+01  1.296e-01  274.30   <2e-16 ***
+## dislikes       8.316e+01  8.529e-01   97.50   <2e-16 ***
+## comment_count -9.773e+01  9.929e-01  -98.43   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3444000 on 40945 degrees of freedom
+## Multiple R-squared:  0.7831, Adjusted R-squared:  0.7831 
+## F-statistic: 4.928e+04 on 3 and 40945 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\hypertarget{visto-que-na-tabela-anova-do-modelo-anterior-nos-presenciamos-que-os-valores-f-mais-baixos-pertenciam-as-variaveis-comentarios-habilitados-e-avaliacoes-habilitadas-criamos-um-modelo-alternativo-sem-estas-duas-variaveis-e-buscamos-compara-los-a-seguir.}{%
+\subsubsection{Visto que na tabela ANOVA do modelo anterior nós
+presenciamos que os valores F mais baixos pertenciam às variáveis
+Comentários Habilitados e Avaliações Habilitadas, criamos um modelo
+alternativo sem estas duas variáveis, e buscamos compará-los a
+seguir.}\label{visto-que-na-tabela-anova-do-modelo-anterior-nos-presenciamos-que-os-valores-f-mais-baixos-pertenciam-as-variaveis-comentarios-habilitados-e-avaliacoes-habilitadas-criamos-um-modelo-alternativo-sem-estas-duas-variaveis-e-buscamos-compara-los-a-seguir.}}
+
+\hypertarget{efetuando-o-teste-de-hipotese-marginal-para-cada-parametro-beta-em-ambos-os-modelos-podemos-observar-que-no-primeiro-modelo-todas-as-variaveis---com-excecao-de-comentarios-habilitados---possuem-o-menor-valor-p-representavel-tornando-as-todas-relevantes.-quanto-ao-segundo-modelo-de-maneira-quase-identica-todas-as-variaveis-possuem-o-menor-valor-p-representavel.-desta-maneira-nos-resta-tomar-como-criterio-de-decisao-utilizar-o-r-ou-coeficiente-de-determinacao.-podemos-observar-que-ambos-os-modelos-conseguem-explicar-a-maioria-das-observacoes-de-visualizacoes-porem-que-o-primeiro-modelo-tem-maior-coeficiente-assim-escolhemos-o-primeiro-modelo-como-o-melhor-modelo-ate-entao.}{%
+\subsubsection{Efetuando o teste de hipótese marginal para cada
+parâmetro beta em ambos os modelos, podemos observar que no primeiro
+modelo, todas as variáveis - com exceção de Comentários Habilitados -
+possuem o menor valor-p representável, tornando-as todas relevantes.
+Quanto ao segundo modelo, de maneira quase idêntica, todas as variáveis
+possuem o menor valor-p representável. Desta maneira, nos resta tomar
+como critério de decisão utilizar o R² (ou coeficiente de determinação).
+Podemos observar que ambos os modelos conseguem explicar a maioria das
+observações de visualizações, porém que o primeiro modelo tem maior
+coeficiente; assim, escolhemos o primeiro modelo como o melhor modelo
+até
+então.}\label{efetuando-o-teste-de-hipotese-marginal-para-cada-parametro-beta-em-ambos-os-modelos-podemos-observar-que-no-primeiro-modelo-todas-as-variaveis---com-excecao-de-comentarios-habilitados---possuem-o-menor-valor-p-representavel-tornando-as-todas-relevantes.-quanto-ao-segundo-modelo-de-maneira-quase-identica-todas-as-variaveis-possuem-o-menor-valor-p-representavel.-desta-maneira-nos-resta-tomar-como-criterio-de-decisao-utilizar-o-r-ou-coeficiente-de-determinacao.-podemos-observar-que-ambos-os-modelos-conseguem-explicar-a-maioria-das-observacoes-de-visualizacoes-porem-que-o-primeiro-modelo-tem-maior-coeficiente-assim-escolhemos-o-primeiro-modelo-como-o-melhor-modelo-ate-entao.}}
+
+\hypertarget{e-interessante-notar-que-embora-tenhamos-julgado-que-as-variaveis-comentarios-habilitados-e-avaliacoes-habilitadas-pouco-importassem-para-o-modelo-elas-na-realidade-colaboram-com-a-melhoria-do-componente-deterministico-do-modelo-tornando-o-melhor.}{%
+\subsubsection{É interessante notar que, embora tenhamos julgado que as
+variáveis Comentários Habilitados e Avaliações Habilitadas pouco
+importassem para o modelo, elas na realidade colaboram com a melhoria do
+componente determinístico do modelo, tornando-o
+melhor.}\label{e-interessante-notar-que-embora-tenhamos-julgado-que-as-variaveis-comentarios-habilitados-e-avaliacoes-habilitadas-pouco-importassem-para-o-modelo-elas-na-realidade-colaboram-com-a-melhoria-do-componente-deterministico-do-modelo-tornando-o-melhor.}}
+
+\hypertarget{analise-de-residuos}{%
+\section{Análise de Resíduos}\label{analise-de-residuos}}
+
+\hypertarget{modelo-1-1}{%
+\subsection{Modelo 1}\label{modelo-1-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{shapiro.test}\NormalTok{(}\KeywordTok{residuals}\NormalTok{(modelo1)[}\DecValTok{0}\OperatorTok{:}\DecValTok{4500}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(modelo1)[0:4500]
+## W = 0.44594, p-value < 2.2e-16
+\end{verbatim}
+
+\hypertarget{seguimos-entao-para-a-validacao-das-pressuposicoes-de-um-modelo-de-regressao-linear-que-consiste-em-testar-se-os-residuos-comportam-se-de-maneira-esperada.}{%
+\subsubsection{Seguimos então para a validação das pressuposições de um
+modelo de regressão linear, que consiste em testar se os resíduos
+comportam-se de maneira
+esperada.}\label{seguimos-entao-para-a-validacao-das-pressuposicoes-de-um-modelo-de-regressao-linear-que-consiste-em-testar-se-os-residuos-comportam-se-de-maneira-esperada.}}
+
+\hypertarget{iniciamos-com-o-teste-shapiro-wilk-de-normalidade-dos-residuos-i.e.se-os-residuos-do-modelo-seguem-uma-distribuicao-normal.-limitamos-o-tamanho-da-amostra-para-4500-observacoes-dada-uma-limitacao-do-teste-em-r.-para-nossa-decepcao-tivemos-o-infortunio-de-que-o-teste-shapiro-wilk-entregasse-nos-um-valor-p-baixissimo-o-menor-valor-p-representavel-o-que-nos-causou-estranheza.-visto-que-o-valor-p-e-baixissimo-nao-e-possivel-aceitar-a-hipotese-h0-de-que-os-residuos-seguem-uma-distribuicao-normal-fazendo-com-que-as-pressuposicoes-de-um-modelo-de-regressao-linear-sejam-quebradas-consequentemente-o-modelo-nao-e-confiavel.}{%
+\subsubsection{Iniciamos com o teste Shapiro-Wilk de normalidade dos
+resíduos (i.e.~se os resíduos do modelo seguem uma distribuição normal).
+Limitamos o tamanho da amostra para 4500 observações, dada uma limitação
+do teste em R. Para nossa decepção, tivemos o infortúnio de que o teste
+Shapiro-Wilk entregasse-nos um valor-p baixíssimo: o menor valor-p
+representável, o que nos causou estranheza. Visto que o valor-p é
+baixíssimo, não é possível aceitar a hipótese H0 de que os resíduos
+seguem uma distribuição normal, fazendo com que as pressuposições de um
+modelo de regressão linear sejam quebradas; consequentemente, o modelo
+não é
+confiável.}\label{iniciamos-com-o-teste-shapiro-wilk-de-normalidade-dos-residuos-i.e.se-os-residuos-do-modelo-seguem-uma-distribuicao-normal.-limitamos-o-tamanho-da-amostra-para-4500-observacoes-dada-uma-limitacao-do-teste-em-r.-para-nossa-decepcao-tivemos-o-infortunio-de-que-o-teste-shapiro-wilk-entregasse-nos-um-valor-p-baixissimo-o-menor-valor-p-representavel-o-que-nos-causou-estranheza.-visto-que-o-valor-p-e-baixissimo-nao-e-possivel-aceitar-a-hipotese-h0-de-que-os-residuos-seguem-uma-distribuicao-normal-fazendo-com-que-as-pressuposicoes-de-um-modelo-de-regressao-linear-sejam-quebradas-consequentemente-o-modelo-nao-e-confiavel.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{qqnorm}\NormalTok{(}\KeywordTok{residuals}\NormalTok{(modelo1), }\DataTypeTok{ylab=}\StringTok{"Resíduos"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Quantis Teóricos")}
+\StringTok{  qqline(residuals(modelo1))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Apresentação_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\hypertarget{para-checar-o-resultado-do-valor-p-retornado-pelo-teste-shapiro-wilk-efetuamos-um-grafico-de-residuos-vs-quantis-teoricos-onde-podemos-observar-sinuosidade-no-grafico-mostrando-uma-grande-variabilidade-nos-residuos-que-destoa-bastante-do-comportamento-teorico-expresso-na-linha.}{%
+\subsubsection{Para checar o resultado do valor-p retornado pelo teste
+Shapiro-Wilk, efetuamos um gráfico de Resíduos vs Quantis Teóricos, onde
+podemos observar sinuosidade no gráfico, mostrando uma grande
+variabilidade nos resíduos, que destoa bastante do comportamento teórico
+expresso na
+linha.}\label{para-checar-o-resultado-do-valor-p-retornado-pelo-teste-shapiro-wilk-efetuamos-um-grafico-de-residuos-vs-quantis-teoricos-onde-podemos-observar-sinuosidade-no-grafico-mostrando-uma-grande-variabilidade-nos-residuos-que-destoa-bastante-do-comportamento-teorico-expresso-na-linha.}}
+
+\hypertarget{modelo-2-1}{%
+\subsection{Modelo 2}\label{modelo-2-1}}
+
+\hypertarget{visto-que-o-primeiro-modelo-foi-entao-rejeitado-pelo-teste-das-pressuposicoes-na-analise-residual-nos-restou-analisar-o-segundo-modelo-visto-anteriormente.-efetuando-o-teste-shapiro-wilk-tambem-neste-segundo-modelo-podemos-ver-um-comportamento-muito-similar-nos-residuos-o-que-invalida-tambem-este-segundo-modelo-tratando-se-de-uma-verdadeira-desventura.}{%
+\subsubsection{Visto que o primeiro modelo foi então rejeitado pelo
+teste das pressuposições na análise residual, nos restou analisar o
+segundo modelo visto anteriormente. Efetuando o teste Shapiro-Wilk
+também neste segundo modelo, podemos ver um comportamento muito similar
+nos resíduos, o que invalida também este segundo modelo, tratando-se de
+uma verdadeira
+desventura.}\label{visto-que-o-primeiro-modelo-foi-entao-rejeitado-pelo-teste-das-pressuposicoes-na-analise-residual-nos-restou-analisar-o-segundo-modelo-visto-anteriormente.-efetuando-o-teste-shapiro-wilk-tambem-neste-segundo-modelo-podemos-ver-um-comportamento-muito-similar-nos-residuos-o-que-invalida-tambem-este-segundo-modelo-tratando-se-de-uma-verdadeira-desventura.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{shapiro.test}\NormalTok{(}\KeywordTok{residuals}\NormalTok{(modelo2)[}\DecValTok{0}\OperatorTok{:}\DecValTok{4500}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(modelo2)[0:4500]
+## W = 0.42851, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \KeywordTok{qqnorm}\NormalTok{(}\KeywordTok{residuals}\NormalTok{(modelo2), }\DataTypeTok{ylab=}\StringTok{"Resíduos"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Quantis Teóricos")}
+\StringTok{  qqline(residuals(modelo2))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Apresentação_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\hypertarget{algoritmo-de-selecao-dos-videos-em-alta}{%
+\section{Algoritmo de Seleção dos Vídeos em
+Alta}\label{algoritmo-de-selecao-dos-videos-em-alta}}
+
+\hypertarget{para-um-video-entrar-na-aba-em-alta-o-algoritmo-leva-em-consideracao-muitos-sinais-incluindo-mas-nao-limitados-a}{%
+\subsubsection{Para um vídeo entrar na aba em alta, o algoritmo leva em
+consideração muitos sinais, incluindo (mas não limitados
+a):}\label{para-um-video-entrar-na-aba-em-alta-o-algoritmo-leva-em-consideracao-muitos-sinais-incluindo-mas-nao-limitados-a}}
+
+\hypertarget{contagem-de-visualizacoes}{%
+\subsubsection{- Contagem de
+visualizações}\label{contagem-de-visualizacoes}}
+
+\hypertarget{a-taxa-de-crescimento-em-visualizacoes}{%
+\subsubsection{- A taxa de crescimento em
+visualizações}\label{a-taxa-de-crescimento-em-visualizacoes}}
+
+\hypertarget{de-onde-vem-as-visualizacoes-incluindo-fora-do-youtube}{%
+\subsubsection{- De onde vêm as visualizações (incluindo fora do
+YouTube)}\label{de-onde-vem-as-visualizacoes-incluindo-fora-do-youtube}}
+
+\hypertarget{a-data-de-publicacao-do-video-quanto-mais-recente-maior-e-a-chance-de-entrar-na-aba-em-alta}{%
+\subsubsection{- A data de publicação do vídeo (quanto mais recente,
+maior é a chance de entrar na aba em
+alta)}\label{a-data-de-publicacao-do-video-quanto-mais-recente-maior-e-a-chance-de-entrar-na-aba-em-alta}}
+
+\hypertarget{esse-algoritmo-e-automatico-no-entanto-tambem-e-verificado-se-os-videos-sugeridos-pelo-algoritmo-sao}{%
+\subsubsection{Esse algoritmo é automático, no entanto, também é
+verificado se os vídeos sugeridos pelo algoritmo
+são:}\label{esse-algoritmo-e-automatico-no-entanto-tambem-e-verificado-se-os-videos-sugeridos-pelo-algoritmo-sao}}
+
+\hypertarget{atraentes-para-uma-ampla-gama-de-espectadores}{%
+\subsubsection{- Atraentes para uma ampla gama de
+espectadores}\label{atraentes-para-uma-ampla-gama-de-espectadores}}
+
+\hypertarget{nao-enganosas-clickbaits-ou-sensacionalistas}{%
+\subsubsection{- Não enganosas, clickbaits ou
+sensacionalistas}\label{nao-enganosas-clickbaits-ou-sensacionalistas}}
+
+\hypertarget{surpreendentes-novos-e-originais}{%
+\subsubsection{- Surpreendentes, novos e
+originais}\label{surpreendentes-novos-e-originais}}
+
+\hypertarget{essa-etapa-e-feita-manualmente-pelos-funcionarios-do-youtube.}{%
+\subsubsection{Essa etapa é feita manualmente pelos funcionários do
+YouTube.}\label{essa-etapa-e-feita-manualmente-pelos-funcionarios-do-youtube.}}
+
+\hypertarget{conclusao}{%
+\section{Conclusão}\label{conclusao}}
+
+\hypertarget{apos-todos-os-testes-foi-observado-que-os-modelos-propostos-de-regressao-linear-multipla-nao-sao-validos-visto-que-as-pressuposicoes-para-que-os-mesmos-ocorram-nao-sao-satisfeitas.-nos-estranhou-inicialmente-o-comportamento-que-os-residuos-apresentam.-entretanto-ao-analisar-mais-profundamente-o-procedimento-efetuado-pelo-youtube-para-que-um-video-da-plataforma-entre-na-aba-em-alta-podemos-ver-que-nao-apenas-ha-o-componente-automatizado-como-tambem-ha-uma-forte-influencia-manual-humana-de-uma-equipe-de-curadoria-do-youtube-como-melhor-descrito-na-secao-acima.-desta-maneira-acreditamos-que-parte-da-componente-residual-do-modelo-de-regressao-linear-se-da-gracas-a-interferencia-humana-nas-selecoes-dos-videos.}{%
+\subsubsection{Após todos os testes foi observado que os modelos
+propostos de regressão linear múltipla não são válidos, visto que as
+pressuposições para que os mesmos ocorram não são satisfeitas. Nos
+estranhou, inicialmente, o comportamento que os resíduos apresentam.
+Entretanto, ao analisar mais profundamente o procedimento efetuado pelo
+YouTube para que um vídeo da plataforma entre na aba ``em alta'',
+podemos ver que não apenas há o componente automatizado, como também há
+uma forte influência manual humana de uma equipe de curadoria do
+YouTube, como melhor descrito na seção acima. Desta maneira, acreditamos
+que parte da componente residual do modelo de regressão linear se dá
+graças à interferência humana nas seleções dos
+vídeos.}\label{apos-todos-os-testes-foi-observado-que-os-modelos-propostos-de-regressao-linear-multipla-nao-sao-validos-visto-que-as-pressuposicoes-para-que-os-mesmos-ocorram-nao-sao-satisfeitas.-nos-estranhou-inicialmente-o-comportamento-que-os-residuos-apresentam.-entretanto-ao-analisar-mais-profundamente-o-procedimento-efetuado-pelo-youtube-para-que-um-video-da-plataforma-entre-na-aba-em-alta-podemos-ver-que-nao-apenas-ha-o-componente-automatizado-como-tambem-ha-uma-forte-influencia-manual-humana-de-uma-equipe-de-curadoria-do-youtube-como-melhor-descrito-na-secao-acima.-desta-maneira-acreditamos-que-parte-da-componente-residual-do-modelo-de-regressao-linear-se-da-gracas-a-interferencia-humana-nas-selecoes-dos-videos.}}
+
+
+\end{document}

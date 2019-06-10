@@ -1,0 +1,190 @@
+---
+title: "Trabalho de Estatística"
+output: html_document
+---
+
+```{r echo = FALSE, message = FALSE} 
+  data = read.csv("USvideos.csv")
+  attach(data)
+```
+
+```{r echo = FALSE}
+
+```
+
+```{r}
+
+```
+
+# Escolha da Base de Dados
+
+### Para a base de dados, foram escolhidas informações sobre vídeos "em alta" do YouTube (i.e. vídeos de destaque na plataforma, postos em uma aba diferenciada). Para a análise, escolhemos vídeos do YouTube estadunidense. A base encontra-se no formato CSV, e utilizamos o software estatístico R para efetuar os comandos de maneira adequada.
+
+### A base é composta de 40949 vídeos, publicados desde 2006 até 2018, onde todos em determinado momento foram incluídos na aba "em-alta", e possui as seguintes variáveis: 
+
+### identificador do vídeo, data em que entrou na aba "em alta", título do vídeo, título do canal que o publicou, identificador da categoria do vídeo, data e hora de publicação do vídeo, tags do vídeo, visualizações do vídeo, número de "gosteis", número de "não gosteis", contagem de comentários, link da imagem de thumbnail do vídeo, descrição do vídeo e valores chaveados que dizem se os comentários foram desabilitados, a avaliação do vídeo ("gosteis" e "não gosteis") foram desabilitados, e por fim se ocorreu algum erro no vídeo ou se foi deletado.
+
+### Na pesquisa efetuada sobre esta base de dados, buscamos analisar a dependência das visualizações de um vídeo com a quantidade de "gosteis", quantidade de "não gosteis", contagem de comentário, se o vídeo permite comentários e se permite avaliações.
+
+# Análise Descritiva
+
+## Análise das Correlações
+
+```{r}
+  cor(views, likes)
+  cor(views, comment_count)
+  cor(views, dislikes)
+```
+
+### Pode-se observar que a correlação entre visualizações e "gosteis" é forte, visto que possui um valor entre 0,70 e 0,89; porém, quanto aos comentários e aos "não gosteis" as correlações são moderadas. Visto que não se tratam de correlações fracas, vale a pena adicionar as variáveis no modelo
+
+```{r message = FALSE}
+  limited_views <- data[views < 3500000, ]
+  attach(limited_views)
+  plot(views,  ylab = "Número de views",  xlab = "Index", main = "Dispersão das views")
+  plot(views[0:1350], ylab = "Número de views", xlab = "Index", main = "Dispersão das views")
+```
+
+### Visto que damos enfoque para as visualizações dos vídeos nesta base de dados, efetuamos um gráfico de dispersão nessa variável. Inicialmente, o gráfico mostra-se bastante poluído, uma vez que há muitas observações de valores muitos próximos. Para permitir a legibilidade das informações, buscamos exibir uma amostra de apenas 1350 observações (3,29% da amostra total) no gráfico de dispersão; fazemos isto apenas porque a amostra original é desornada, pois caso o contrário, teríamos dados bastante enviesados. Podemos ver, agora de maneira mais clara, que as visualizações dos vídeos em alta concentram-se abaixo de 1000000, porém que há ainda muitos vídeos com visualizações bem maiores, e um comportamento de que quão mais elevada a faixa de visualizações, mais raros os vídeos que a alcançam (confirmando algo esperado e intuitivo).
+
+```{r echo = FALSE, message = FALSE}
+  attach(data)
+```
+
+```{r message = FALSE}
+  views_count <- subset(data[8], data[8] < 4000000)
+  boxplot(views_count, col = 'lightblue', main = "Boxplot das views da aba Em alta")
+```
+
+### O boxplot acima evidencia este comportamento. Embora a mediana dos valores de visualização seja 681861, há muitos vídeos com visualizações muito altas, levando o gráfico consideravelmente para baixo, e com muitos outliners (OBS: este gráfico possui uma amostra de vídeos com menos de 4 milhões de visualizações, visto que a quantidade de outliners na amostra é tão grande, que faz com que o boxplot da amostra original seja ilegível).
+
+### Os dois gráficos abaixo referem-se à proporção de vídeos com habilitação de comentários, e às quantidades de vídeos enquadrados nas diferentes categorias. Pelo gráfico de setores, podemos observar que a grande maioria dos vídeos em alta têm comentários habilitados; já pelo gráfico gráfico de barras, podemos observar que a maior parte dos vídeos em alta pertencem à categoria "entretenimento", seguida pela categoria "música".
+
+```{r}
+  freq <- table(comments_disabled)
+  pie(freq, main = "Habilitação de comentários", labels = c("98.45%", "1.55%"), col=c(4,2))
+  legend("topright", fill = c(4,2), legend = c("Habilitados", "Desativados"))
+```
+
+```{r}
+  ajustes <- table(data$category_id)
+  barplot(ajustes, col = "lightblue", main = "Número de ocorrências de vídeos por categoria",     ylab = "Frequência", xlab = "Id da categoria")
+  legend("topright", c("10: Música","22: Vlogs ","23: Comédia", "24: Entretenimento", "26: Moda", "27: Educação"), bty = "n")
+```
+
+# Modelo e Teste para Regressão
+
+### Agora, analisadas que há correlação entre "gosteis", "não gosteis" e contagem de comentários para com as visualizações, buscamos montar um modelo de regressão linear múltipla que possui a seguinte formulação: 
+
+### Visualizações = B0 + B1 * ("Gosteis") + B2 ("Não Gosteis") + B3 * (Contagem de Comentários) + B4 * (Comentários Habilitados) + B5 * (Avaliações Habilitadas)
+
+```{r}
+frame <- data.frame(views = views, likes = likes, dislikes = dislikes, comment_count = comment_count, comments_disabled = comments_disabled, ratings_disabled = ratings_disabled)
+full.model <- lm(views~. , data = frame)
+anova(full.model)
+```
+
+### Com o modelo configurado, efetuamos o teste ANOVA para analisar se há regressão. Na tabela, podemos observar algo interessante: o valor-p para cada variável é 2,2 * 10^(-16); este não é só um valor bastante pequeno, como também é o menor valor acima de 0 que o R consegue computar e representar em formato decimal (double, ou dupla precisão). Isto nos sugere que o valor-p é tão pequeno que representa que as variáveis são significativas até para uma pesquisa com alfa=0,0; em outras palavras, para uma pesquisa com nível de significância 0,0.
+
+### Podemos em seguida observar os valores F de cada variável. O valor enorme para a variável "gosteis" sugere que a mesma possui um impacto enorme no modelo, enquanto que o fato de comentários estarem habilitados impacta muito menos (isto porque, provavelmente, a grande massa de vídeos em alta está com os comentários habilitados, fazendo com que a existência da variável em si não seja muito relevante).
+
+### Em luz destas informações, podemos concluir com propriedade que há regressão, e que as variáveis independentes de fato influenciam a variável Visualizações e que de fato compõem uma função linear. Portanto, damos seguimento ao experimento.
+
+```{r}
+ library(MASS)
+ step.model <- stepAIC(full.model, direction = "both", trace = FALSE)
+ summary(step.model)
+```
+
+### Em seguida, efetuamos o método stepwise de escolha para o melhor modelo. Estranhamente, o método stepwise não sugeriu mudança alguma no modelo prévio, apenas replicando-o.
+
+# Teste de Hipótese Marginal
+```{r}
+  modelo1 = lm(views ~ likes + dislikes + comment_count + comments_disabled + ratings_disabled)
+  modelo2 = lm(views ~ likes + dislikes + comment_count)
+```
+
+## Modelo 1
+
+```{r}
+  summary(modelo1)
+```
+
+## Modelo 2
+
+```{r}
+  summary(modelo2)
+```
+
+### Visto que na tabela ANOVA do modelo anterior nós presenciamos que os valores F mais baixos pertenciam às variáveis Comentários Habilitados e Avaliações Habilitadas, criamos um modelo alternativo sem estas duas variáveis, e buscamos compará-los a seguir.
+
+### Efetuando o teste de hipótese marginal para cada parâmetro beta em ambos os modelos, podemos observar que no primeiro modelo, todas as variáveis - com exceção de Comentários Habilitados - possuem o menor valor-p representável, tornando-as todas relevantes. Quanto ao segundo modelo, de maneira quase idêntica, todas as variáveis possuem o menor valor-p representável. Desta maneira, nos resta tomar como critério de decisão utilizar o R² (ou coeficiente de determinação). Podemos observar que ambos os modelos conseguem explicar a maioria das observações de visualizações, porém que o primeiro modelo tem maior coeficiente; assim, escolhemos o primeiro modelo como o melhor modelo até então.
+
+### É interessante notar que, embora tenhamos julgado que as variáveis Comentários Habilitados e Avaliações Habilitadas pouco importassem para o modelo, elas na realidade colaboram com a melhoria do componente determinístico do modelo, tornando-o melhor.
+
+# Análise de Resíduos
+
+## Modelo 1
+
+```{r}
+  shapiro.test(residuals(modelo1)[0:4500])
+```
+
+### Seguimos então para a validação das pressuposições de um modelo de regressão linear, que consiste em testar se os resíduos comportam-se de maneira esperada.
+
+### Iniciamos com o teste Shapiro-Wilk de normalidade dos resíduos (i.e. se os resíduos do modelo seguem uma distribuição normal). Limitamos o tamanho da amostra para 4500 observações, dada uma limitação do teste em R. Para nossa decepção, tivemos o infortúnio de que o teste Shapiro-Wilk entregasse-nos um valor-p baixíssimo: o menor valor-p representável, o que nos causou estranheza. Visto que o valor-p é baixíssimo, não é possível aceitar a hipótese H0 de que os resíduos seguem uma distribuição normal, fazendo com que as pressuposições de um modelo de regressão linear sejam quebradas; consequentemente, o modelo não é confiável.
+
+```{r}
+  qqnorm(residuals(modelo1), ylab="Resíduos", xlab = "Quantis Teóricos")
+  qqline(residuals(modelo1))
+```
+
+### Para checar o resultado do valor-p retornado pelo teste Shapiro-Wilk, efetuamos um gráfico de Resíduos vs Quantis Teóricos, onde podemos observar sinuosidade no gráfico, mostrando uma grande variabilidade nos resíduos, que destoa bastante do comportamento teórico expresso na linha.
+
+
+## Modelo 2
+
+### Visto que o primeiro modelo foi então rejeitado pelo teste das pressuposições na análise residual, nos restou analisar o segundo modelo visto anteriormente. Efetuando o teste Shapiro-Wilk também neste segundo modelo, podemos ver um comportamento muito similar nos resíduos, o que invalida também este segundo modelo, tratando-se de uma verdadeira desventura.
+
+```{r}
+  shapiro.test(residuals(modelo2)[0:4500])
+```
+
+```{r}
+  qqnorm(residuals(modelo2), ylab="Resíduos", xlab = "Quantis Teóricos")
+  qqline(residuals(modelo2))
+```
+
+# Algoritmo de Seleção dos Vídeos em Alta
+
+### Para um vídeo entrar na aba em alta, o algoritmo leva em consideração muitos sinais, incluindo (mas não limitados a):
+
+### - Contagem de visualizações
+### - A taxa de crescimento em visualizações
+### - De onde vêm as visualizações (incluindo fora do YouTube)
+### - A data de publicação do vídeo (quanto mais recente, maior é a chance de entrar na aba em alta)
+
+### Esse algoritmo é automático, no entanto, também é verificado se os vídeos sugeridos pelo algoritmo são:
+
+### - Atraentes para uma ampla gama de espectadores
+### - Não enganosas, clickbaits ou sensacionalistas
+### - Surpreendentes, novos e originais
+
+### Essa etapa é feita manualmente pelos funcionários do YouTube.
+
+# Conclusão
+
+### Após todos os testes foi observado que os modelos propostos de regressão linear múltipla não são válidos, visto que as pressuposições para que os mesmos ocorram não são satisfeitas. Nos estranhou, inicialmente, o comportamento que os resíduos apresentam. Entretanto, ao analisar mais profundamente o procedimento efetuado pelo YouTube para que um vídeo da plataforma entre na aba "em alta", podemos ver que não apenas há o componente automatizado, como também há uma forte influência manual humana de uma equipe de curadoria do YouTube, como melhor descrito na seção acima. Desta maneira, acreditamos que parte da componente residual do modelo de regressão linear se dá graças à interferência humana nas seleções dos vídeos.
+
+<style type="text/css">
+h1 {
+}
+
+h2 {
+  font-size: 2.8vh;
+}
+
+h3 {
+  font-size: 2.3vh;
+}
+</style>
