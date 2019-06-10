@@ -144,7 +144,7 @@ anova(full.model)
 
 ## Modelo 2
 
-### Visto que o primeiro modelo foi então rejeitado pelo teste das pressuposições na análise residual, nos restou analisar o segundo modelo visto anteriormente. Efetuando o teste Shapiro-Wilk também neste segundo modelo, podemos ver um comportamento muito similar nos resíduos, o que invalida também este segundo modelo, tratando-se de uma verdadeira desventura.
+### Visto que o primeiro modelo foi então rejeitado pelo teste das pressuposições na análise residual, nos restou analisar o segundo modelo visto anteriormente. Efetuando o teste Shapiro-Wilk também neste segundo modelo, podemos ver um comportamento muito similar nos resíduos, o que invalida também este segundo modelo.
 
 ```{r}
   shapiro.test(residuals(modelo2)[0:4500])
