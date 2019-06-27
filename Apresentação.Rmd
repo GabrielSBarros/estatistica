@@ -28,29 +28,49 @@ output: html_document
 
 # Análise Descritiva
 
+## Interpretação das Dispersões
+
+```{r}
+  attach(data)
+  plot(views, likes)
+```
+
+### Acima, efetuamos um gráfico de dispersão para as variávies Visualizações e "Gosteis" dos vídeos. Dado o grande número de observações agrupada com menores visualizações e números de likes, o gráfico tem sua legibilidade dificultada. Para melhorar a sua leitura, efetuamos um gráfico de dispersão normalmente, porém desta vez com uma amostra reduzida de vídeos com até 1 milhão de visualizações.
+
+```{r}
+  amostra <- data[views < 1000000,]
+  attach(amostra)
+  plot(views[0:500], likes[0:500], xlim=c(0, 1500000), ylim=c(0,75000), xlab ="Visualizações", ylab="Número de likes", main = "Dispersão das views")
+```
+
+### Com esta redução nas observações, podemos ver melhor o seu comportamento no que diz respeito a estas variáveis. Pode-se ver que há uma dispersão gradual dos vídeos à medida que o número de visualizações aumenta, pois vídeos de menos visualizações têm menos likes. Esses vídeos com menores visualizações agrupam-se bastante próximos entre si, o que evidencia que a base de dados é composta por um grande número de outliers. Ainda assim, visto que há uma tendência de que vídeos com mais visualizações tenham maiores likes, podemos começar a ver indícios de correlação entre ambas as variáveis.
+
+```{r}
+  attach(data)
+  plot(views, comment_count)
+```
+
+### Fizemos o mesmo para Número de Comentários e Visualizações. Assim como no gráfico de dispersão inicial para as variáveis anteriores, este possui uma grande concentração de observações com poucos comentários e poucas visualizações. Utilizamos a mesma estratégia, utilizando a mesma amostra limitada anteriormente.
+
+```{r message = FALSE}
+  attach(amostra)
+  plot(views[0:500], comment_count[0:500], xlim=c(0, 2000000), ylim=c(0,20000), xlab = "Visualizações", ylab="Comentários", main = "Dispersão das views")
+```
+
+### Podemos ver com este gráfico mais controlado que as observações têm uma maior dispersão entre si que no gráfico de Visualizações vs Likes. Isso nos oferece uma pista de que a correlação entre Comentários e Visualizações pode ser menor que Visualizações e Likes.
+
 ## Análise das Correlações
+
+### Então, para averiguar mais adequadamente a correlação das variáveis da base de dados, efetuamos os testes abaixo. Pode-se observar que a correlação entre Visualizações e Likes é forte, visto que possui um valor entre 0,70 e 0,89; porém, quanto a Visualizações e Comentários a correlação é moderada, com um valor entre 0,40 e 0,69, colaborando com nossas investigações anteriores. 
 
 ```{r}
   cor(views, likes)
   cor(views, comment_count)
-  cor(views, dislikes)
 ```
 
-### Pode-se observar que a correlação entre visualizações e "gosteis" é forte, visto que possui um valor entre 0,70 e 0,89; porém, quanto aos comentários e aos "não gosteis" as correlações são moderadas. Visto que não se tratam de correlações fracas, vale a pena adicionar as variáveis no modelo
+## Análise de Distribuição
 
-```{r message = FALSE}
-  limited_views <- data[views < 3500000, ]
-  attach(limited_views)
-  amostra <- data[views < 1000000,]
-  attach(amostra)
-  plot(views[0:500], likes[0:500], xlim=c(0, 1500000), ylim=c(0,75000), xlab ="Visualizações", ylab="Número de likes", main = "Dispersão das views")
-  attach(data)
-  plot(views, likes)
-  plot(views[0:500], comment_count[0:500], xlim=c(0, 2000000), ylim=c(0,20000), xlab = "Visualizações", ylab="Comentários", main = "Dispersão das views")
-  plot(views, comment_count) 
-```
-
-### Visto que damos enfoque para as visualizações dos vídeos nesta base de dados, efetuamos um gráfico de dispersão nessa variável. Inicialmente, o gráfico mostra-se bastante poluído, uma vez que há muitas observações de valores muitos próximos. Para permitir a legibilidade das informações, buscamos exibir uma amostra de apenas 1350 observações (3,29% da amostra total) no gráfico de dispersão; fazemos isto apenas porque a amostra original é desornada, pois caso o contrário, teríamos dados bastante enviesados. Podemos ver, agora de maneira mais clara, que as visualizações dos vídeos em alta concentram-se abaixo de 1000000, porém que há ainda muitos vídeos com visualizações bem maiores, e um comportamento de que quão mais elevada a faixa de visualizações, mais raros os vídeos que a alcançam (confirmando algo esperado e intuitivo).
+### Abaixo, expressamos um bloxplot das Visualizações com o objetivo de analisar um pouco mais a distribuição das observações. Vemos aqui que a mediana tem o valor baixo de 681861, porém que está bem abaixo no boxplot; através disto, pode-se ver que a distribuição dos dados não é 'comportada'. Adicionalmente, podemos confirmar a quantidade vasta de outliers, isto é, visitas com números extraordinários de visualizações. 
 
 ```{r echo = FALSE, message = FALSE}
   attach(data)
@@ -60,8 +80,6 @@ output: html_document
   views_count <- subset(data[8], data[8] < 4000000)
   boxplot(views_count, col = 'lightblue', main = "Boxplot das views da aba Em alta")
 ```
-
-### O boxplot acima evidencia este comportamento. Embora a mediana dos valores de visualização seja 681861, há muitos vídeos com visualizações muito altas, levando o gráfico consideravelmente para baixo, e com muitos outliners (OBS: este gráfico possui uma amostra de vídeos com menos de 4 milhões de visualizações, visto que a quantidade de outliners na amostra é tão grande, que faz com que o boxplot da amostra original seja ilegível).
 
 ### Os dois gráficos abaixo referem-se à proporção de vídeos com habilitação de comentários, e às quantidades de vídeos enquadrados nas diferentes categorias. Pelo gráfico de setores, podemos observar que a grande maioria dos vídeos em alta têm comentários habilitados; já pelo gráfico gráfico de barras, podemos observar que a maior parte dos vídeos em alta pertencem à categoria "entretenimento", seguida pela categoria "música".
 
