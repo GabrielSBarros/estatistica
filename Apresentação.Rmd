@@ -41,8 +41,11 @@ output: html_document
 ```{r message = FALSE}
   limited_views <- data[views < 3500000, ]
   attach(limited_views)
-  plot(views,  ylab = "Número de views",  xlab = "Index", main = "Dispersão das views")
-  plot(views[0:1350], ylab = "Número de views", xlab = "Index", main = "Dispersão das views")
+  amostra <- data[views < 1000000,]
+  plot(views[0:500], likes[0:500], xlim=c(0, 1500000), ylim=c(0,75000), xlab ="Visualizações", ylab="Número de likes", main = "Dispersão das views")
+  plot(views, likes)
+  plot(views[0:500], comment_count[0:500], xlim=c(0, 2000000), ylim=c(0,20000), xlab = "Visualizações", ylab="Comentários", main = "Dispersão das views")
+  plot(views, comment_count) 
 ```
 
 ### Visto que damos enfoque para as visualizações dos vídeos nesta base de dados, efetuamos um gráfico de dispersão nessa variável. Inicialmente, o gráfico mostra-se bastante poluído, uma vez que há muitas observações de valores muitos próximos. Para permitir a legibilidade das informações, buscamos exibir uma amostra de apenas 1350 observações (3,29% da amostra total) no gráfico de dispersão; fazemos isto apenas porque a amostra original é desornada, pois caso o contrário, teríamos dados bastante enviesados. Podemos ver, agora de maneira mais clara, que as visualizações dos vídeos em alta concentram-se abaixo de 1000000, porém que há ainda muitos vídeos com visualizações bem maiores, e um comportamento de que quão mais elevada a faixa de visualizações, mais raros os vídeos que a alcançam (confirmando algo esperado e intuitivo).
