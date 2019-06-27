@@ -42,7 +42,9 @@ output: html_document
   limited_views <- data[views < 3500000, ]
   attach(limited_views)
   amostra <- data[views < 1000000,]
+  attach(amostra)
   plot(views[0:500], likes[0:500], xlim=c(0, 1500000), ylim=c(0,75000), xlab ="Visualizações", ylab="Número de likes", main = "Dispersão das views")
+  attach(data)
   plot(views, likes)
   plot(views[0:500], comment_count[0:500], xlim=c(0, 2000000), ylim=c(0,20000), xlab = "Visualizações", ylab="Comentários", main = "Dispersão das views")
   plot(views, comment_count) 
